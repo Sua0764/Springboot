@@ -51,7 +51,11 @@ public class OrderService {
         return orders.stream().filter()
     }*/
 
+    public List<Customer> getCustomerByOrderDate(LocalDate orderDate) {
+        List<Order> orders = orderRepository.findByOrderDate(orderDate);
+        return orders.stream().map(order -> order.getCustomerId()).collect(Collectors.toList());
 
+    }
 
 }
 

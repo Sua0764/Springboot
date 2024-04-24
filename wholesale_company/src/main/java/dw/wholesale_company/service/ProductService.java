@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,4 +68,26 @@ public class ProductService {
         }
         return products;
     }
+
+    //수정
+    public List<Product> getProductById(List<Long> idList) {
+        List<Product> productList = productRepository.findAll();
+
+        List<Product> newProducts = new ArrayList<>();
+        for(int i=0; i<productList.size(); i++) {
+            for(int j=0; j< idList.size(); j++) {
+                if (productList.get(i).getProductId() == idList.get(j)) {
+        newProducts.add(productList.get(i));
+                }
+            }
+        }
+        return newProducts;
+    }
+
+   /* public List<Product> getProductByPriceMax() {
+        List<Product> productList = productRepository.findAll();
+
+        return productList.stream().sorted();
+    }*/
+
 }
