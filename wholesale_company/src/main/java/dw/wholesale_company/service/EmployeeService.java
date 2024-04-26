@@ -19,13 +19,16 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+
+    // 가장 최근 입사한 사원 정보
+
     public Employee getRecentEmployee() {
         List<Employee> employees = employeeRepository.findAll();
 
         Employee recent = employees.get(0);
         for (int i = 0; i < employees.size(); i++ ) {
             if (recent.getHireDate().isAfter(employees.get(i+1).getHireDate())) {
-                recent = employees.get(i+1);
+                recent = employees.get(i);
             }
         }
         return recent;

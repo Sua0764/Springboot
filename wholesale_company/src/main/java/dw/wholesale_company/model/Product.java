@@ -28,7 +28,7 @@ public class Product {
     private int unitPrice;
 
     @Column(name = "재고", nullable = false)
-    private long inventory;
+    private int inventory;
 
 
 }

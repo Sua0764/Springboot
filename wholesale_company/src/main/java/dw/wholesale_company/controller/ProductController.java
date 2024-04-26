@@ -40,12 +40,6 @@ public class ProductController {
                 HttpStatus.OK);
     }
 
-    /*@GetMapping("products/name/contain/lambda/{name}")
-    public ResponseEntity<List<Product>> getProductByName2(@PathVariable String name) {
-        return new ResponseEntity<>(productService.getProductByName2(name),
-                HttpStatus.OK);
-    }*/
-
     @GetMapping("products/between/{lowLimit}/{highLimit}")
     public ResponseEntity<List<Product>> getProductBetweenPrice(@PathVariable int lowLimit, int highLimit) {
         return new ResponseEntity<>(productService.getProductBetweenPrice(lowLimit,highLimit),
@@ -56,4 +50,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProductById(@RequestBody List<Long> idList) {
         return new ResponseEntity<>(productService.getProductById(idList),HttpStatus.OK);
     }
+
+    @GetMapping("/products/inventoryprice/{limit}")
+    public ResponseEntity<List<Product>> getProductByInventoryPrice(@PathVariable int limit) {
+        return new ResponseEntity<>(productService.getProductByInventoryPrice(limit),
+                HttpStatus.OK);
+    }
 }
+

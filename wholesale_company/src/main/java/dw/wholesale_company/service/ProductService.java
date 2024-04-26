@@ -32,12 +32,13 @@ public class ProductService {
         return
     }*/
 
-    //제품의 재고가 50개 미만인 제품 정보 얻기
+    //제품의 재고가 입력매개변수로 받은 숫자 미만인 제품 정보 얻기
     public List<Product> getProductByInventoryUnder(int num) {
         List<Product> productList = productRepository.findAll();
         return productList.stream().filter(p ->p.getInventory() < num).collect(Collectors.toList());
     }
 
+    // 입력받은 문자열이 포함되어 있는 제품 찾기
     public List<Product> getProductWithName(String name) {
         List<Product> productList = productRepository.findAll();
 
@@ -51,7 +52,8 @@ public class ProductService {
         return productWithName;
     }
 
-    /*public List<Product> getProductByName2(String name) {
+    // 람다식
+    /*public List<Product> getProductByName(String name) {
         List<Product> productList = productRepository.findAll();
         return productList.stream().filter(p ->p.getProductName().contains(name)).collect(Collectors.toList());
     }*/
@@ -69,11 +71,18 @@ public class ProductService {
         return products;
     }
 
-    //수정
+    //제품 재고금액이 높은 상위 ()개 제품
+    public List<Product> getProductByInventoryPrice(int limit) {
+        List<Product> productList = productRepository.findAll();
+        return productList.stream().sorted(Comparator.comparingInt((Product p) -> p.getUnitPrice() * p.getInventory()).reversed())
+                .limit(limit).collect(Collectors.toList());
+    }
+
+    // 입력매개변수로 받은 ID배열로 제품 찾기
     public List<Product> getProductById(List<Long> idList) {
         List<Product> productList = productRepository.findAll();
 
-        List<Product> newProducts = new ArrayList<>();
+        /*List<Product> newProducts = new ArrayList<>();
         for(int i=0; i<productList.size(); i++) {
             for(int j=0; j< idList.size(); j++) {
                 if (productList.get(i).getProductId() == idList.get(j)) {
@@ -81,13 +90,9 @@ public class ProductService {
                 }
             }
         }
-        return newProducts;
+        return newProducts;*/
+
+        return productList.stream().filter(product -> idList.contains(product.getProductId()))
+                .collect(Collectors.toList());
     }
-
-   /* public List<Product> getProductByPriceMax() {
-        List<Product> productList = productRepository.findAll();
-
-        return productList.stream().sorted();
-    }*/
-
 }
