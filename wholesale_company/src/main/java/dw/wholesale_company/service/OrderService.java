@@ -23,49 +23,17 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    /*public List<Order> getOrdersAfterDate() {
-        List<Order> orders = orderRepository.findAll();
-
-        for (int i=0; i<orders.size(); i++) {
-            LocalDate a = LocalDate
-            LocalDate b = LocalDate.of(2021, Month.MAY, 1);
-            if (a.compareTo(b) > 0) {
-                orders.add()
-            }
-        }
-
-        return
-    }*/
-
     //주문일이 2021년 5월 1일 이후인 주문 정보 얻기
     // 프론트에서 날짜를 정해주는 방식
     public List<Order> getOrderByDateAfter(LocalDate date) {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().filter(a -> a.getOrderDate().compareTo(date) > 0)
-                .collect(Collectors.toList());
+                        .collect(Collectors.toList());
     }
-
-
-    /*public List<Order> getCustomerByOrderDate(LocalDate date) {
-        List<Order> orders = orderRepository.findAll();
-        return orders.stream().filter()
-    }*/
 
     public List<Customer> getCustomerByOrderDate(LocalDate orderDate) {
         List<Order> orders = orderRepository.findByOrderDate(orderDate);
         return orders.stream().map(order -> order.getCustomerId()).collect(Collectors.toList());
 
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
