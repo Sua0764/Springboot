@@ -8,4 +8,4 @@ Springboot 실습 자료
 
 - jdbc project
 
--wholsale_company
+- wholsale_company
