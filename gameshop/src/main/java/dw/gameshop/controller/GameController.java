@@ -20,17 +20,17 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/products")
     public ResponseEntity<List<Game>> getAllGames() {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK) ;
     }
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<Game> getGameById(@PathVariable long id) {
         return new ResponseEntity<>(gameService.getGameById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/api/products/{id}")
+    @PutMapping("/products/{id}")
     public ResponseEntity<Game> updateGameById(@PathVariable long id, @RequestBody Game game) {
         return new ResponseEntity<>(gameService.updateGameById(id,game), HttpStatus.OK);
     }
