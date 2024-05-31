@@ -23,7 +23,7 @@ public class ReviewDto {
         reviewDto.setReviewPoint(review.getPoint());
         reviewDto.setReviewText(review.getReviewText());
         reviewDto.setGameId(review.getGameId().getId());
-        reviewDto.setGameName(review.getGameId().getName());
+        reviewDto.setGameName(review.getGameId().getTitle());
         reviewDto.setUserId(review.getUserId().getUserId());
         return reviewDto;
     }

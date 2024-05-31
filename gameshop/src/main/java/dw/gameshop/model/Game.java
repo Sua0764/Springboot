@@ -10,7 +10,7 @@ public class Game {
     private long id;
 
     @Column(length = 100)
-    private String name;
+    private String title;
 
     @Column(length = 100)
     private String genre;
@@ -29,7 +29,7 @@ public class Game {
 
     public Game(long id, String name, String genre, int price, String image, String text) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.genre = genre;
         this.price = price;
         this.image = image;
@@ -44,12 +44,12 @@ public class Game {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = title;
     }
 
     public String getGenre() {
