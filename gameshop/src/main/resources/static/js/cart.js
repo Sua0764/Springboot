@@ -15,8 +15,7 @@ function sessionCurrent() {
             // Purchase 객체를 만들어서 리턴
             return {
               game: game,
-              user: { userId: userId },
-              authority: { authorityName: authority },
+              user: { userId: userId, authority: { authorityName: authority } },
             };
           });
           document
