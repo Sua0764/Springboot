@@ -157,6 +157,7 @@
 }
 
 .purchaseBtn {
+  display: inline-block;
   width: 100px;
   height: 40px;
   background-color: dodgerblue;
@@ -247,6 +248,40 @@
   border-radius: 5px;
   cursor: pointer;
   margin: 0 auto;
+}
+
+.cart {
+  width: 100%;
+  background-color: khaki;
+  padding: 20px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.cart-table td {
+  text-align: center;
+}
+
+thead {
+  background-color: #27ae60;
+  height: 50px;
+}
+.tr:nth-child(even) td {
+  background-color: eaeaed;
+}
+
+.totalprice {
+  display: inline-block;
+}
+
+.imgtd {
+  width: 200px;
 }
 
 /* hidden 클래스 스타일은 파일의 제일 아래에 놓자!*/
