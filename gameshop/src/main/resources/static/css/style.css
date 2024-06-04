@@ -170,6 +170,7 @@
   margin: 50px;
 }
 
+.eraseBtn:hover,
 .loginBtn:hover,
 .logoutBtn:hover,
 .purchaseBtn:hover,
@@ -282,6 +283,20 @@ thead {
 
 .imgtd {
   width: 200px;
+}
+
+.deleteBtn {
+  width: 100px;
+  height: 40px;
+  background-color: dodgerblue;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: inline-block;
 }
 
 /* hidden 클래스 스타일은 파일의 제일 아래에 놓자!*/

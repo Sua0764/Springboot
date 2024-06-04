@@ -6,7 +6,10 @@ import dw.gameshop.model.User;
 import dw.gameshop.repository.PurchaseRepository;
 import dw.gameshop.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -61,4 +64,16 @@ public class PurchaseService {
         return purchaseRepository.findByUser(userOptional.get());
     }
 
+    public List<Purchase> getPurchaseListByCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("User is not authenticated");
+        }
+        String userId = authentication.getName();
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        if(userOptional.isEmpty()) {
+            throw new ResourceNotFoundException("User","Id",userId);
+        }
+        return purchaseRepository.findByUser(userOptional.get());
+    }
 }
