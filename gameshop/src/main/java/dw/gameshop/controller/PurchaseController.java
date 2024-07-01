@@ -1,5 +1,8 @@
 package dw.gameshop.controller;
 
+import dw.gameshop.dto.BaseResponse;
+import dw.gameshop.dto.PurchaseDto;
+import dw.gameshop.enumstatus.ResultCode;
 import dw.gameshop.model.Purchase;
 import dw.gameshop.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,36 +18,71 @@ import java.util.List;
 public class PurchaseController {
     @Autowired
     PurchaseService purchaseService;
+
     @PostMapping("/products/purchase")
-    public Purchase savePurchase(@RequestBody Purchase purchase) {
-        return purchaseService.savePurchase(purchase);
+    public ResponseEntity<BaseResponse<PurchaseDto>> savePurchase(@RequestBody Purchase purchase) {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.savePurchase(purchase),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.CREATED);
     }
 
     @PostMapping("/products/purchaselist")
-    public List<Purchase> savePurchaseList(@RequestBody List<Purchase> purchaseList) {
-        return purchaseService.savePurchaseList(purchaseList);
+    public ResponseEntity<BaseResponse<List<PurchaseDto>>> savePurchaseList(@RequestBody List<Purchase> purchaseList) {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.savePurchaseList(purchaseList),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.CREATED);
     }
 
     @GetMapping("/products/purchase")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public List<Purchase> getAllPurchases() {
-        return purchaseService.getAllPurchases();
+    public ResponseEntity<BaseResponse<List<PurchaseDto>>> getAllPurchases() {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.getAllPurchases(),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.OK);
     }
 
     @GetMapping("/products/purchase/id/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public List<Purchase> getPurchaseListById(@PathVariable String userId) {
-        return purchaseService.getPurchaseListByUser(userId);
+    public ResponseEntity<BaseResponse<List<PurchaseDto>>> getPurchaseListByUser(@PathVariable String userId) {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.getPurchaseListByUser(userId),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.OK);
     }
 
     @GetMapping("/products/purchase/name/{userName}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<List<Purchase>> getPurchaseByUserName(@PathVariable String userName) {
-        return new ResponseEntity<>(purchaseService.getPurchaseByUserName(userName),(HttpStatus.OK));
+    public ResponseEntity<BaseResponse<List<PurchaseDto>>> getPurchaseListByUserName(
+            @PathVariable String userName) {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.getPurchaseListByUserName(userName),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.OK);
     }
 
     @GetMapping("/products/purchase/current")
-    public List<Purchase> getPurchaseListByCurrentUser() {
-        return purchaseService.getPurchaseListByCurrentUser();
+    public ResponseEntity<BaseResponse<List<PurchaseDto>>> getPurchaseListByCurrentUser() {
+        return new ResponseEntity<>(
+                new BaseResponse(ResultCode.SUCCESS.name(),
+                        purchaseService.getPurchaseListByCurrentUser(),
+                        ResultCode.SUCCESS.getMsg())
+                , HttpStatus.OK);
     }
 }
+
+
+
+
+
+
+
+
+

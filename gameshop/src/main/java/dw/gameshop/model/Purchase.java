@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -14,20 +13,17 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "purchase")
+@Table(name="purchase")
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "purchase_time")
+    @Column(name="purchase_time")
     private LocalDateTime purchaseTime;
 }

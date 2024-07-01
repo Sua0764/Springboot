@@ -1,22 +1,20 @@
-const { useOutlet } = require("react-router-dom");
-
-const urlPurchaseAll = "http://localhost:8080/api/products/purchase";
-const urlPurchaseById = "http://localhost:8080/api/products/purchase/id/";
-const urlPurchaseByCurrent =
-  "http://localhost:8080/api/products/purchase/current";
+const urlPurchaseAll = "/api/products/purchase";
+const urlPurchaseById = "/api/products/purchase/id/";
+const urlPurchaseByCurrent = "/api/products/purchase/current";
+const urlSession = "/api/user/current";
 
 const adminPage = document.querySelector(".admin_page");
 const userPage = document.querySelector(".user_page");
 
 function sessionCurrent() {
   axios
-    .get("http://localhost:8080/user/current", { withCredentials: true })
+    .get(urlSession, { withCredentials: true })
     .then((response) => {
-      console.log("데이터: ", response);
-      if (response.status == 200) {
+      console.log("데이터:", response.data);
+      if (response.data.resultCode == "SUCCESS") {
         console.log("세션 유지");
-        const userId = response.data.userId;
-        const authority = response.data.authority[0].authority;
+        const userId = response.data.data.userId;
+        const authority = response.data.data.authority[0].authority;
         if (authority == "ROLE_ADMIN") {
           adminPage.classList.remove("hidden");
           userPage.classList.add("hidden");
@@ -26,14 +24,14 @@ function sessionCurrent() {
           axios
             .get(urlPurchaseByCurrent, { withCredentials: true })
             .then((response) => {
-              console.log("데이터:", response);
-              displayPurchaseInfo(response.data);
+              console.log("데이터:", response.data);
+              displayPurchaseInfo(response.data.data);
             })
             .catch((error) => {
-              console.log("에러 발생:", error);
+              console.log("에러 발생:", error.response.data);
             });
         } else {
-          console.log("에러! 여기 오면 안되는디.. :", error);
+          console.log("에러! 여기오면 안되는데..");
         }
 
         document
@@ -55,18 +53,18 @@ function sessionCurrent() {
             axios
               .get(url, { withCredentials: true })
               .then((response) => {
-                console.log("데이터:", response);
-                displayPurchaseInfo(response.data);
+                console.log("데이터:", response.data);
+                displayPurchaseInfo(response.data.data);
               })
               .catch((error) => {
-                console.log("에러 발생:", error);
+                console.log("에러 발생:", error.response.data);
                 alert("입력하신 유저 아이디는 존재하지 않습니다.");
               });
           });
       }
     })
     .catch((error) => {
-      console.log("에러 발생:", error);
+      console.log("에러 발생:", error.response.data);
       alert("로그인해주세요.");
     });
 }
@@ -74,7 +72,7 @@ function sessionCurrent() {
 document.addEventListener("DOMContentLoaded", (event) => {
   const dropdown = document.querySelector("#dropdown");
   dropdown.addEventListener("change", (event) => {
-    document.querySelector("#useridInput").value = "";
+    document.querySelector("#userIdInput").value = "";
   });
 });
 
@@ -84,19 +82,22 @@ function displayPurchaseInfo(games) {
   // 테이블 바디 초기화
   tbody.innerHTML = "";
   games.forEach((data, index) => {
+    // 태그 요소 생성
     const tr = document.createElement("tr");
     const num = document.createElement("td");
     const gameId = document.createElement("td");
     const title = document.createElement("td");
     const userId = document.createElement("td");
     const date = document.createElement("td");
+    // 클래스이름 생성
 
+    // 태그속성추가
     num.textContent = index + 1;
     gameId.textContent = data.game.id;
     title.textContent = data.game.title;
     userId.textContent = data.user.userId;
-    date.textContent = formatPurchaseData(data.purchaseTime);
-
+    date.textContent = formatPurchaseDate(data.purchaseTime);
+    // appendChild 부모자식 위치 설정
     tr.appendChild(num);
     tr.appendChild(gameId);
     tr.appendChild(title);
@@ -111,18 +112,18 @@ function displayPurchaseInfo(games) {
   });
 }
 
-function formatPurchaseData(purchaseTime) {
+function formatPurchaseDate(purchaseTime) {
   const date = new Date(purchaseTime);
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDay()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+  const day = String(date.getDate()).padStart(2, "0");
 
-  const hour = String(date.getHours()).padStart(2, "0");
-  const minute = String(date.getMinutes()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  return "${year}-${month}-${day} ${hours}:${minutes}:${seconds}";
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 sessionCurrent();

@@ -24,7 +24,7 @@ public class UserService {
 
     public String saveUser(UserDto userDto) {
         Optional<User> userOptional = userRepository.findByUserId(userDto.getUserId());
-        if (userOptional .isPresent()) {
+        if (userOptional.isPresent()) {
             return "이미 등록된 ID입니다";
         }
         Authority authority = new Authority();
@@ -32,7 +32,8 @@ public class UserService {
         User user = new User(userDto.getUserId(),
                 userDto.getUserName(),
                 userDto.getUserEmail(),
-                bCryptPasswordEncoder.encode(userDto.getPassword()),authority,
+                bCryptPasswordEncoder.encode(userDto.getPassword()),
+                authority,
                 LocalDateTime.now());
         return userRepository.save(user).getUserId();
     }

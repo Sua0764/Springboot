@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,7 +33,6 @@ public class User implements UserDetails {
     @Column(name="created_at", updatable = false)
     private LocalDateTime createdAt;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(
@@ -49,6 +47,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return userId;
+    }
+
+    public String getUsername2() {
+        return userName;
     }
 
     @Override

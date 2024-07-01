@@ -3,31 +3,28 @@ package dw.gameshop.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "games")
+@Table(name="games")
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @Column(length = 100)
     private String title;
-
     @Column(length = 100)
     private String genre;
-
-    @Column()
+    @Column
     private int price;
-
     @Column(length = 65535)
     private String image;
-
     @Column(length = 65535)
     private String text;
 
     public Game() {
+        super();
     }
 
-    public Game(long id, String name, String genre, int price, String image, String text) {
+    public Game(long id, String title, String genre, int price, String image, String text) {
+        super();
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -48,7 +45,7 @@ public class Game {
         return title;
     }
 
-    public void setTitle(String name) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

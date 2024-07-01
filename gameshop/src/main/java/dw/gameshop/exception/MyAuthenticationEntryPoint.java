@@ -2,18 +2,17 @@ package dw.gameshop.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dw.gameshop.dto.BaseResponse;
+import dw.gameshop.enumstatus.ResultCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -25,10 +24,10 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
         // 인증되지 않은 사용자가 보호된 리소스에 접근했을 때 호출됨
 
         // 응답으로 전송할 JSON 데이터 생성
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("status", HttpStatus.UNAUTHORIZED.value());
-        responseData.put("error", "Unauthorized");
-        responseData.put("message", "Authentication required");
+        BaseResponse<String> responseData = new BaseResponse<>();
+        responseData.setResultCode(ResultCode.ERROR.name());
+        responseData.setData("Authentication required");
+        responseData.setMessage("인증이 실패했습니다.");
 
         // JSON 데이터를 문자열로 변환
         ObjectMapper mapper = new ObjectMapper();
